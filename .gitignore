@@ -1,0 +1,71 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Package files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven directory
+target/
+
+# IDE files
+/.idea
+*.iml
+*.iws
+*.ipr
+/.vscode
+
+# Eclipse files
+.classpath
+.project
+.settings/
+
+# Mac OS folder attributes
+.DS_Store
+
+# Gradle files
+.gradle
+/build/
+
+# Service credentials
+*.jks
+*.p12
+
+# Temp files
+*.tmp
+*.temp
+
+# Node.js dependencies (if using with Spring Boot)
+node_modules/
+
+# Java build and package files
+mvnw
+mvnw.cmd
+.mvn/
+
+# IntelliJ Project files
+/out/
+
+# Jekyll metadata file
+.jekyll-metadata
+
+# Local development
+local.properties
+
+# Application configuration files
+/application*.properties
+/application*.yml
+!application-example*.properties
+!application-example*.yml
+
+# Environment-specific configuration files
+/src/main/resources/config/
+/src/test/resources/config/

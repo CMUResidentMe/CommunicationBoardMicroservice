@@ -1,0 +1,57 @@
+# The Thread type represents a discussion thread with a list of posts
+type Thread {
+  id: ID!
+  title: String!
+  content: String!
+  userId: String!
+  userName: String!
+  posts: [Post]
+}
+
+# The Post type represents a post in a thread with a list of replies
+type Post {
+  id: ID!
+  content: String!
+  userId: String!
+  userName: String!
+  replies: [Reply]
+}
+
+# The Reply type represents a reply to a post
+type Reply {
+  id: ID!
+  content: String!
+  userId: String!
+  userName: String!
+}
+
+# Queries for fetching data
+type Query {
+  threads: [Thread] # Retrieve all threads
+  thread(id: ID!): Thread # Retrieve a single thread by ID
+}
+
+# Mutations for creating and deleting data
+type Mutation {
+  createThread(
+    title: String!
+    content: String!
+    userId: String!
+    userName: String!
+  ): Thread
+  deleteThread(id: ID!, userId: String!, privilege: String!): Boolean
+  createPost(
+    threadId: ID!
+    content: String!
+    userId: String!
+    userName: String!
+  ): Post
+  deletePost(id: ID!, userId: String!, privilege: String!): Boolean
+  createReply(
+    postId: ID!
+    content: String!
+    userId: String!
+    userName: String!
+  ): Reply
+  deleteReply(id: ID!, userId: String!, privilege: String!): Boolean
+}
