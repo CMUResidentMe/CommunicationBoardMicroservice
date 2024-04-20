@@ -5,7 +5,7 @@ type Thread {
   content: String!
   userId: String!
   userName: String!
-  posts: [Post]
+  createdAt: String!
 }
 
 # The Post type represents a post in a thread with a list of replies
@@ -14,7 +14,7 @@ type Post {
   content: String!
   userId: String!
   userName: String!
-  replies: [Reply]
+  createdAt: String!
 }
 
 # The Reply type represents a reply to a post
@@ -23,12 +23,15 @@ type Reply {
   content: String!
   userId: String!
   userName: String!
+  createdAt: String!
 }
 
 # Queries for fetching data
 type Query {
-  threads: [Thread] # Retrieve all threads
-  thread(id: ID!): Thread # Retrieve a single thread by ID
+  threads(pageNum: Int!, pageSize: Int!): [Thread]
+  thread(id: ID!): Thread
+  postsByThread(threadId: ID!, pageNum: Int!, pageSize: Int!): [Post]
+  repliesByPost(postId: ID!, pageNum: Int!, pageSize: Int!): [Reply]
 }
 
 # Mutations for creating and deleting data

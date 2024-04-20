@@ -4,10 +4,15 @@ import com.example.communicationboard.model.Post;
 import com.example.communicationboard.model.Reply;
 import com.example.communicationboard.repository.PostRepository;
 import com.example.communicationboard.repository.ReplyRepository;
+
+// import org.hibernate.validator.internal.util.logging.Log_.logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +29,11 @@ public class ReplyService {
 
     public Optional<Reply> getReply(String id) {
         return replyRepository.findById(id);
+    }
+
+    public List<Reply> getRepliesByPost(String postId, int pageNum, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNum, pageSize, Sort.by("createdAt").descending());
+        return replyRepository.findByPostId(postId, pageRequest).getContent();
     }
 
     @Transactional

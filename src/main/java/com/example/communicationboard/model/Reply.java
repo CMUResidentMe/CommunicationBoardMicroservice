@@ -2,7 +2,7 @@ package com.example.communicationboard.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import java.util.Date;
 import java.util.List;
 
 @Document
@@ -14,12 +14,14 @@ public class Reply implements PostComponent {
     private String userId; // ID of the user who created the reply
     private String userName; // Name of the user who created the reply
     private String postId; // ID of the post this reply belongs to
+    private Date createdAt; // The date and time the reply was created
 
     public Reply(String content, String userId, String userName, String postId) {
         this.content = content;
         this.userId = userId;
         this.userName = userName;
         this.postId = postId;
+        this.createdAt = new Date();
     }
 
     public String getId() {
@@ -56,6 +58,14 @@ public class Reply implements PostComponent {
 
     public void setPostId(String postId) {
         this.postId = postId;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     // These methods are no-ops for the Reply because it is a leaf in the composite
