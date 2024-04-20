@@ -3,7 +3,7 @@ package com.example.communicationboard.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +16,7 @@ public class Post implements PostComponent {
     private String userId; // ID of the user who created the post
     private String userName; // Name of the user who created the post
     private String threadId; // ID of the thread this post belongs to
+    private Date createdAt; // The date and time the post was created
 
     @DBRef
     private List<PostComponent> replies; // List to hold the child replies
@@ -26,6 +27,7 @@ public class Post implements PostComponent {
         this.userName = userName;
         this.threadId = threadId;
         this.replies = new ArrayList<>();
+        this.createdAt = new Date();
     }
 
     public String getId() {
@@ -62,6 +64,14 @@ public class Post implements PostComponent {
 
     public void setThreadId(String threadId) {
         this.threadId = threadId;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

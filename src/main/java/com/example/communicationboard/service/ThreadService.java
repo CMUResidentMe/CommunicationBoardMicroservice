@@ -6,6 +6,9 @@ import com.example.communicationboard.model.Thread;
 import com.example.communicationboard.repository.PostRepository;
 import com.example.communicationboard.repository.ThreadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +33,10 @@ public class ThreadService {
         return threadRepository.findById(id);
     }
 
-    public List<Thread> getAllThreads() {
-        return threadRepository.findAll();
+    public List<Thread> getAllThreads(int pageNum, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNum, pageSize, Sort.by("createdAt").descending());
+        Page<Thread> page = threadRepository.findAll(pageRequest);
+        return page.getContent();
     }
 
     @Transactional

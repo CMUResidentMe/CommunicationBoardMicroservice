@@ -17,8 +17,8 @@ public class ThreadController {
     private ThreadService threadService;
 
     @QueryMapping
-    public List<Thread> threads() {
-        return threadService.getAllThreads();
+    public List<Thread> threads(@Argument int pageNum, @Argument int pageSize) {
+        return threadService.getAllThreads(pageNum, pageSize);
     }
 
     @QueryMapping
