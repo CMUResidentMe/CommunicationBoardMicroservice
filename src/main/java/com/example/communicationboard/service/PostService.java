@@ -34,7 +34,7 @@ public class PostService {
     }
 
     public List<Post> getPostsByThread(String threadId, int pageNum, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNum, pageSize, Sort.by("createdAt").descending());
+        PageRequest pageRequest = PageRequest.of(pageNum, pageSize, Sort.by("createdAt").ascending());
         return postRepository.findByThreadId(threadId, pageRequest).getContent();
     }
 
