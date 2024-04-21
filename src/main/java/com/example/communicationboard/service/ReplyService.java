@@ -32,7 +32,7 @@ public class ReplyService {
     }
 
     public List<Reply> getRepliesByPost(String postId, int pageNum, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNum, pageSize, Sort.by("createdAt").descending());
+        PageRequest pageRequest = PageRequest.of(pageNum, pageSize, Sort.by("createdAt").ascending());
         return replyRepository.findByPostId(postId, pageRequest).getContent();
     }
 
