@@ -43,6 +43,7 @@ public class MsgProducer {
     public void sendPostCreatedNotification(RmNotification notification) {
         String message = JsonUtil.convert2Str(notification);
         kafkaTemplate.send(kafkaTopic, postCreatedEvent, message);
+
         logger.info("Sent Post Created notification: {}", message);
     }
 
