@@ -63,8 +63,8 @@ local.properties
 # Application configuration files
 /application*.properties
 /application*.yml
-!application-example*.properties
-!application-example*.yml
+# !application-example*.properties
+# !application-example*.yml
 
 # Environment-specific configuration files
 /src/main/resources/config/
