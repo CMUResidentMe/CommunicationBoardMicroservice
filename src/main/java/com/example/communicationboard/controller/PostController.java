@@ -33,7 +33,7 @@ public class PostController {
 
     @MutationMapping
     public Boolean deletePost(@Argument String id, @Argument String userId, @Argument String privilege) {
-        postService.deletePost(id, userId, privilege);
+        postService.deletePost(id, userId, privilege, false);
         return true;
     }
 }
