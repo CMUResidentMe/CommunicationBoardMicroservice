@@ -33,15 +33,18 @@ public class PostService {
         return postRepository.save(post);
     }
 
+    // Get a post by its id
     public Optional<Post> getPost(String id) {
         return postRepository.findById(id);
     }
 
+    // Get all posts in a thread
     public List<Post> getPostsByThread(String threadId, int pageNum, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNum, pageSize, Sort.by("createdAt").ascending());
         return postRepository.findByThreadId(threadId, pageRequest).getContent();
     }
 
+    // Delete a post by its id, cascading to its children replies if necessary
     @Transactional
     public void deletePost(String id, String userId, String privilege, boolean isCascading) {
         Post post = postRepository.findById(id)
@@ -54,7 +57,7 @@ public class PostService {
         post.getChildren()
                 .forEach(reply -> replyService.deleteReply(reply.getId(), userId, "manager", true));
 
-        // If the post is directly deleted, remove it from the thread's children
+        // Remove the post from its parent thread
         Thread thread = threadRepository.findById(post.getThreadId())
                 .orElseThrow(() -> new RuntimeException("Thread not found with id: " + post.getThreadId()));
         thread.removeChildById(id);
@@ -66,6 +69,7 @@ public class PostService {
         // If the post owner is not the one deleting the post, send a notification to
         // the owner
         if (!post.getUserId().equals(userId)) {
+            // Send different messages based on whether the deletion is cascading
             String message = isCascading
                     ? String.format(
                             "Your post '%s' under the thread '%s' has been deleted because the thread was removed.",
@@ -82,6 +86,7 @@ public class PostService {
         }
     }
 
+    // Add a reply to a post
     public Reply addReplyToPost(String postId, Reply reply) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("Post not found with id: " + postId));
@@ -105,6 +110,7 @@ public class PostService {
         return reply;
     }
 
+    // Get all replies to a post
     public List<PostComponent> findRepliesByPostId(String postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found"));

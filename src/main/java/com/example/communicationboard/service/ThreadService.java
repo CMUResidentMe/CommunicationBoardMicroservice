@@ -32,16 +32,19 @@ public class ThreadService {
         return threadRepository.save(thread);
     }
 
+    // Get a thread by its id
     public Optional<Thread> getThread(String id) {
         return threadRepository.findById(id);
     }
 
+    // Get all threads
     public List<Thread> getAllThreads(int pageNum, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNum, pageSize, Sort.by("createdAt").descending());
         Page<Thread> page = threadRepository.findAll(pageRequest);
         return page.getContent();
     }
 
+    // Delete a thread by its id, cascading to its children posts if necessary
     @Transactional
     public void deleteThread(String id, String userId, String privilege) {
         Thread thread = threadRepository.findById(id)
@@ -72,6 +75,7 @@ public class ThreadService {
         }
     }
 
+    // Add a post to a thread
     public Post addPostToThread(String threadId, Post post) {
         Thread thread = threadRepository.findById(threadId)
                 .orElseThrow(() -> new IllegalArgumentException("Thread not found with id: " + threadId));
@@ -95,6 +99,7 @@ public class ThreadService {
         return post;
     }
 
+    // Get all posts in a thread
     public List<PostComponent> findPostsByThreadId(String threadId) {
         Thread thread = threadRepository.findById(threadId)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
