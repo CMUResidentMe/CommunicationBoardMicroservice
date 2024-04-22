@@ -29,15 +29,18 @@ public class ReplyService {
         return replyRepository.save(reply);
     }
 
+    // Get a reply by its id
     public Optional<Reply> getReply(String id) {
         return replyRepository.findById(id);
     }
 
+    // Get all replies in a post
     public List<Reply> getRepliesByPost(String postId, int pageNum, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNum, pageSize, Sort.by("createdAt").ascending());
         return replyRepository.findByPostId(postId, pageRequest).getContent();
     }
 
+    // Delete a reply by its id
     @Transactional
     public void deleteReply(String id, String userId, String privilege, boolean isCascading) {
         Reply reply = replyRepository.findById(id)
@@ -46,6 +49,7 @@ public class ReplyService {
             throw new SecurityException("Unauthorized to delete this reply.");
         }
 
+        // Remove the reply from its parent post
         Post post = postRepository.findById(reply.getPostId())
                 .orElseThrow(() -> new RuntimeException("Post not found with id: " + reply.getPostId()));
         post.removeChildById(id);
@@ -54,7 +58,10 @@ public class ReplyService {
 
         replyRepository.delete(reply);
 
+        // Send notification to the reply owner if the reply is not deleted by the owner
         if (!reply.getUserId().equals(userId)) {
+            // Send notification to the reply owner based on whether the deletion is
+            // cascading or not
             String message = isCascading
                     ? String.format("Your reply '%s' to the post '%s' has been deleted because the post was removed.",
                             reply.getContent(), post.getContent())

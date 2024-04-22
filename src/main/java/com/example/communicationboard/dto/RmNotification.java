@@ -3,12 +3,16 @@ package com.example.communicationboard.dto;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+// This class is used to create a notification object
 public class RmNotification {
 
+    // The type of notification
     private String notificationType;
     private String eventTime;
+    // The recipient of the notification
     private String owner;
     private String message;
+    // The object ID of the source of the notification
     private String sourceID;
 
     public RmNotification(String notificationType) {

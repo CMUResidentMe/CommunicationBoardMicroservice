@@ -16,9 +16,11 @@ public class MsgProducer {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
+    // Kafka topic name
     @Value("${communicationBoard.kafkaTopic}")
     private String kafkaTopic;
 
+    // Kafka event names
     @Value("${communicationBoard.threadDeleted}")
     private String threadDeletedEvent;
 
@@ -34,6 +36,7 @@ public class MsgProducer {
     @Value("${communicationBoard.replyDeleted}")
     private String replyDeletedEvent;
 
+    // Methods to send notifications to Kafka
     public void sendThreadDeletedNotification(RmNotification notification) {
         String message = JsonUtil.convert2Str(notification);
         kafkaTemplate.send(kafkaTopic, threadDeletedEvent, message);

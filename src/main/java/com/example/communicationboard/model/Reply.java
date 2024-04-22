@@ -24,6 +24,7 @@ public class Reply implements PostComponent {
         this.createdAt = new Date();
     }
 
+    // Getters and setters
     public String getId() {
         return id;
     }

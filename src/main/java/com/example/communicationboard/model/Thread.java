@@ -30,6 +30,7 @@ public class Thread implements PostComponent {
         this.createdAt = new Date();
     }
 
+    // Getters and setters
     public String getId() {
         return id;
     }
@@ -74,6 +75,7 @@ public class Thread implements PostComponent {
         this.createdAt = createdAt;
     }
 
+    // PostComponent methods
     @Override
     public void addChild(PostComponent postComponent) {
         if (postComponent instanceof Post) {

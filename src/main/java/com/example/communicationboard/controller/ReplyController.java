@@ -20,17 +20,20 @@ public class ReplyController {
     @Autowired
     private ReplyService replyService;
 
+    // Query to get all replies in a post
     @QueryMapping
     public List<Reply> repliesByPost(@Argument String postId, @Argument int pageNum, @Argument int pageSize) {
         return replyService.getRepliesByPost(postId, pageNum, pageSize);
     }
 
+    // Mutation to create a reply in a post
     @MutationMapping
     public Reply createReply(@Argument String postId, @Argument String content,
             @Argument String userId, @Argument String userName) {
         return postService.addReplyToPost(postId, new Reply(content, userId, userName, postId));
     }
 
+    // Mutation to delete a reply
     @MutationMapping
     public Boolean deleteReply(@Argument String id, @Argument String userId, @Argument String privilege) {
         replyService.deleteReply(id, userId, privilege, false);
